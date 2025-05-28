@@ -68,7 +68,7 @@ try:
     dag_args['worker_node_count'] = 0
   if sku[0] in ['DBT', 'STMV', 'DBSQL']:
     wh_size = wh_scale_factor_map[f"{scale_factor}"]
-    wh_name = f"TPCDI_{wh_size}"
+    wh_name = "SQL Workshop"
     dag_args['wh_name'] = wh_name
     dag_args['wh_size'] = wh_size    
     print(f"Your workflow type requires Databricks SQL. \nServerless Warehouses are created by default. \nIf you do not have serverless SQL WHs available, please CREATE a non-serverless {wh_size} WH with the name '{wh_name}' and run this code again.")
