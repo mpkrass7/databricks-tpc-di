@@ -60,15 +60,15 @@ repo_src_path = f"{dbutils.notebook.entry_point.getDbutils().notebook().getConte
 workspace_src_path = f"/Workspace{repo_src_path}"
 user_name = spark.sql("select lower(regexp_replace(split(current_user(), '@')[0], '(\\\W+)', ' '))").collect()[0][0]
 workflows_dict      = {
-  "CLUSTER": "Workspace Cluster Workflow", 
+  # "CLUSTER": "Workspace Cluster Workflow", 
   "DBSQL": "DBSQL Warehouse Workflow",
-  "DLT-CORE": "CORE Delta Live Tables Pipeline", 
-  "DLT-PRO": "PRO Delta Live Tables Pipeline with SCD Type 1/2", 
-  "DLT-ADVANCED": "ADVANCED Delta Live Tables Pipeline with DQ",
+  # "DLT-CORE": "CORE Delta Live Tables Pipeline", 
+  # "DLT-PRO": "PRO Delta Live Tables Pipeline with SCD Type 1/2", 
+  # "DLT-ADVANCED": "ADVANCED Delta Live Tables Pipeline with DQ",
   # "DBT": "dbt Core on DB SQL Warehouse",
   # "STMV": "Streaming Tables and Materialized Views on DBSQL/DLT"
 }
-default_workflow   = workflows_dict['CLUSTER']
+default_workflow   = workflows_dict['DBSQL']
 workflow_vals      = list(workflows_dict.values())
 default_sf         = '10'
 default_job_name   = f"{string.capwords(user_name).replace(' ','-')}-TPCDI"
@@ -88,7 +88,7 @@ if lighthouse:
   default_catalog       = 'workspace'
   default_sf_options    = ['10', '100'] # Limited Scale Factor since 8-core driver will struggle to generate and also native XML lib will not be able to scale adequately for CustomerMgmt
 else:
-  default_sf_options    = ['10', '100', '1000', '5000', '10000']
+  default_sf_options    = ['10', '100']
   UC_enabled            = eval(string.capwords(spark.conf.get('spark.databricks.unityCatalog.enabled')))
   cloud_provider        = spark.conf.get('spark.databricks.cloudProvider') # "Azure", "GCP", or "AWS"
   node_types            = get_node_types()
@@ -110,4 +110,4 @@ else:
     default_worker_type = "Standard_D8ads_v5" 
     default_driver_type = "Standard_D4as_v5"
     cust_mgmt_type      = "Standard_D64ads_v5" 
-  default_catalog = 'tpcdi' if UC_enabled else 'hive_metastore'
+  default_catalog = 'test' if UC_enabled else 'hive_metastore'
