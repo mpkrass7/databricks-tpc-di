@@ -88,7 +88,7 @@ if lighthouse:
   default_catalog       = 'workspace'
   default_sf_options    = ['10', '100'] # Limited Scale Factor since 8-core driver will struggle to generate and also native XML lib will not be able to scale adequately for CustomerMgmt
 else:
-  default_sf_options    = ['10', '100']
+  default_sf_options    = ['10']
   UC_enabled            = eval(string.capwords(spark.conf.get('spark.databricks.unityCatalog.enabled')))
   cloud_provider        = spark.conf.get('spark.databricks.cloudProvider') # "Azure", "GCP", or "AWS"
   node_types            = get_node_types()
